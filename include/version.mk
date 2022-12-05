@@ -23,20 +23,23 @@ PKG_CONFIG_DEPENDS += \
 sanitize = $(call tolower,$(subst _,-,$(subst $(space),-,$(1))))
 
 VERSION_NUMBER:=$(call qstrip,$(CONFIG_VERSION_NUMBER))
-VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),22.03.2)
+VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),3.0.1)
+
+VERSION_COMMIT:=$(shell git rev-parse --short HEAD)
+VERSION_COMMIT_DATE:=$(shell git show -s --format=%ci $(VERSION_COMMIT))
 
 VERSION_CODE:=$(call qstrip,$(CONFIG_VERSION_CODE))
-VERSION_CODE:=$(if $(VERSION_CODE),$(VERSION_CODE),r19803-9a599fee93)
+VERSION_CODE:=$(if $(VERSION_CODE),$(VERSION_CODE),(OpenWRT 22.03.2 r19803-9a599fee93))
 
 VERSION_REPO:=$(call qstrip,$(CONFIG_VERSION_REPO))
 VERSION_REPO:=$(if $(VERSION_REPO),$(VERSION_REPO),https://downloads.openwrt.org/releases/22.03.2)
 
 VERSION_DIST:=$(call qstrip,$(CONFIG_VERSION_DIST))
-VERSION_DIST:=$(if $(VERSION_DIST),$(VERSION_DIST),OpenWrt)
+VERSION_DIST:=$(if $(VERSION_DIST),$(VERSION_DIST),5GWRT)
 VERSION_DIST_SANITIZED:=$(call sanitize,$(VERSION_DIST))
 
 VERSION_MANUFACTURER:=$(call qstrip,$(CONFIG_VERSION_MANUFACTURER))
-VERSION_MANUFACTURER:=$(if $(VERSION_MANUFACTURER),$(VERSION_MANUFACTURER),OpenWrt)
+VERSION_MANUFACTURER:=$(if $(VERSION_MANUFACTURER),$(VERSION_MANUFACTURER),5GWRT)
 
 VERSION_MANUFACTURER_URL:=$(call qstrip,$(CONFIG_VERSION_MANUFACTURER_URL))
 VERSION_MANUFACTURER_URL:=$(if $(VERSION_MANUFACTURER_URL),$(VERSION_MANUFACTURER_URL),https://openwrt.org/)
@@ -104,5 +107,7 @@ VERSION_SED_SCRIPT:=$(SED) 's,%U,$(call sed_escape,$(VERSION_REPO)),g' \
 	-e 's,%u,$(call sed_escape,$(VERSION_HOME_URL)),g' \
 	-e 's,%s,$(call sed_escape,$(VERSION_SUPPORT_URL)),g' \
 	-e 's,%P,$(call sed_escape,$(VERSION_PRODUCT)),g' \
-	-e 's,%h,$(call sed_escape,$(VERSION_HWREV)),g'
+	-e 's,%h,$(call sed_escape,$(VERSION_HWREV)),g' \
+	-e 's,%a,$(call sed_escape,$(VERSION_COMMIT)),g' \
+	-e 's,%x,$(call sed_escape,$(VERSION_COMMIT_DATE)),g'
 
