@@ -1,0 +1,22 @@
+Index: linux-5.10.146/drivers/net/usb/qmi_wwan.c
+===================================================================
+--- linux-5.10.146.orig/drivers/net/usb/qmi_wwan.c
++++ linux-5.10.146/drivers/net/usb/qmi_wwan.c
+@@ -93,7 +93,7 @@ extern struct rmnet_nss_cb *rmnet_nss_ca
+  */
+ #define VERSION_NUMBER "V1.2.2"
+ #define QUECTEL_WWAN_VERSION "Quectel_Linux&Android_QMI_WWAN_Driver_"VERSION_NUMBER
+-static const char driver_name[] = "qmi_wwan_q";
++static const char driver_name[] = "qmi_wwan";
+ 
+ /* driver specific data */
+ struct qmi_wwan_state {
+@@ -2536,7 +2536,7 @@ static void qmap_qmi_wwan_disconnect(str
+ #endif
+ 
+ static struct usb_driver qmi_wwan_driver = {
+-	.name		      = "qmi_wwan_q",
++	.name		      = "qmi_wwan",
+ 	.id_table	      = products,
+ 	.probe		      = qmi_wwan_probe,
+ #if defined(QUECTEL_WWAN_QMAP)
