@@ -23,7 +23,7 @@ PKG_CONFIG_DEPENDS += \
 sanitize = $(call tolower,$(subst _,-,$(subst $(space),-,$(1))))
 
 VERSION_NUMBER:=$(call qstrip,$(CONFIG_VERSION_NUMBER))
-VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),3.0.4)
+VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),3.0.6)
 
 VERSION_COMMIT:=$(shell git rev-parse --short HEAD)
 VERSION_COMMIT_DATE:=$(shell git show -s --format=%ci $(VERSION_COMMIT))
