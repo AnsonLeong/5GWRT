@@ -1,0 +1,35 @@
+Index: linux-5.10.146/drivers/net/usb/qmi_wwan_q.c
+===================================================================
+--- linux-5.10.146.orig/drivers/net/usb/qmi_wwan_q.c
++++ linux-5.10.146/drivers/net/usb/qmi_wwan_q.c
+@@ -177,17 +177,6 @@ static ssize_t raw_ip_store(struct devic
+ 
+ static DEVICE_ATTR_RW(raw_ip);
+ 
+-static struct attribute *qmi_wwan_sysfs_attrs[] = {
+-	&dev_attr_raw_ip.attr,
+-	NULL,
+-};
+-
+-static struct attribute_group qmi_wwan_sysfs_attr_group = {
+-	.name = "qmi",
+-	.attrs = qmi_wwan_sysfs_attrs,
+-};
+-
+-
+ /* default ethernet address used by the modem */
+ static const u8 default_modem_addr[ETH_ALEN] = {0x02, 0x50, 0xf3};
+ 
+@@ -702,10 +691,12 @@ static struct attribute *qmi_wwan_sysfs_
+ 	&dev_attr_bridge_mode.attr,
+ 	&dev_attr_bridge_ipv4.attr,
+ #endif
++	&dev_attr_raw_ip.attr,
+ 	NULL,
+ };
+ 
+ static struct attribute_group qmi_wwan_sysfs_attr_group = {
++	.name = "qmi",
+ 	.attrs = qmi_wwan_sysfs_attrs,
+ };
+ 

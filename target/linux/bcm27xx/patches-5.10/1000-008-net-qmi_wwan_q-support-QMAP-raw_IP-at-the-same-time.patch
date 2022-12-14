@@ -1,0 +1,30 @@
+Index: linux-5.10.146/drivers/net/usb/qmi_wwan_q.c
+===================================================================
+--- linux-5.10.146.orig/drivers/net/usb/qmi_wwan_q.c
++++ linux-5.10.146/drivers/net/usb/qmi_wwan_q.c
+@@ -100,9 +100,10 @@ static const char driver_name[] = "qmi_w
+ struct qmi_wwan_state {
+ 	struct usb_driver *subdriver;
+ 	atomic_t pmcount;
+-	unsigned long flags;
++	unsigned long unused;
+ 	struct usb_interface *control;
+ 	struct usb_interface *data;
++	unsigned long flags;
+ };
+ 
+ enum qmi_wwan_flags {
+@@ -2091,8 +2092,11 @@ static int qmi_wwan_bind(struct usbnet *
+ 	struct usb_driver *driver = driver_of(intf);
+ 	struct qmi_wwan_state *info = (void *)&dev->data;
+ 
+-	BUILD_BUG_ON((sizeof(((struct usbnet *)0)->data) <
+-		      sizeof(struct qmi_wwan_state)));
++	/* Commented by Arcadyan 20221214
++	 * Since the size of qmi_wwan_state is 6 not 5 now and the structure of usbnet has a size of 5,
++	 * they are not match anymore */
++	/* BUILD_BUG_ON((sizeof(((struct usbnet *)0)->data) < */
++	/* 	      sizeof(struct qmi_wwan_state))); */
+ 
+ 	/* set up initial state */
+ 	info->control = intf;
