@@ -1,0 +1,38 @@
+Index: linux-5.10.146/drivers/net/usb/qmi_wwan_q.c
+===================================================================
+--- linux-5.10.146.orig/drivers/net/usb/qmi_wwan_q.c
++++ linux-5.10.146/drivers/net/usb/qmi_wwan_q.c
+@@ -692,15 +692,23 @@ static struct attribute *qmi_wwan_sysfs_
+ 	&dev_attr_bridge_mode.attr,
+ 	&dev_attr_bridge_ipv4.attr,
+ #endif
+-	&dev_attr_raw_ip.attr,
+ 	NULL,
+ };
+ 
+ static struct attribute_group qmi_wwan_sysfs_attr_group = {
+-	.name = "qmi",
+ 	.attrs = qmi_wwan_sysfs_attrs,
+ };
+ 
++static struct attribute *qmi_wwan_rawip_sysfs_attrs[] = {
++	&dev_attr_raw_ip.attr,
++	NULL,
++};
++
++static struct attribute_group qmi_wwan_rawip_sysfs_attr_group = {
++	.name = "qmi",
++	.attrs = qmi_wwan_rawip_sysfs_attrs,
++};
++
+ #ifdef QUECTEL_BRIDGE_MODE
+ static struct attribute *qmi_qmap_sysfs_attrs[] = {
+ 	&dev_attr_bridge_mode.attr,
+@@ -2240,6 +2248,7 @@ static int qmi_wwan_bind(struct usbnet *
+ 
+ 		info->unused = (unsigned long)pQmapDev;
+ 		dev->net->sysfs_groups[0] = &qmi_wwan_sysfs_attr_group;
++		dev->net->sysfs_groups[2] = &qmi_wwan_rawip_sysfs_attr_group;
+ 
+ 		dev_info(&intf->dev, "rx_urb_size = %zd\n", dev->rx_urb_size);
+ 	}
